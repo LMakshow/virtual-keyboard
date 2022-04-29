@@ -6,6 +6,7 @@ export default class Keyboard {
     this.lang = 'en';
   }
 
+  // Check language from local storage
   languageCheck() {
     if (localStorage.getItem('lang')) {
       this.lang = localStorage.getItem('lang');
@@ -14,6 +15,7 @@ export default class Keyboard {
     }
   }
 
+  // Change language (if Shift+Alt) and save new one to local storage
   languageChange(event) {
     if (this.lang === 'en') {
       this.lang = 'ru';
@@ -24,18 +26,15 @@ export default class Keyboard {
     this.updateKeyboard(event);
   }
 
+  // Update keyboard if switch language or pressing Shift
   updateKeyboard(event) {
     const { lang } = this;
     if (event.shiftKey) {
-      if (lang === 'en') {
-        document.querySelectorAll('.key').forEach((e) => {
-          if (e.dataset.enShift) e.innerHTML = e.dataset.enShift;
-        });
-      } else {
-        document.querySelectorAll('.key').forEach((e) => {
-          if (e.dataset.ruShift) e.innerHTML = e.dataset.ruShift;
-        });
-      }
+      document.querySelectorAll('.key').forEach((e) => {
+        if (e.dataset[`${lang}Shift`]) {
+          e.innerHTML = e.dataset[`${lang}Shift`];
+        } else if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
+      });
     } else {
       document.querySelectorAll('.key').forEach((e) => {
         if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
@@ -65,6 +64,9 @@ export default class Keyboard {
         if (e.shift) {
           key.dataset.ruShift = e.shift.ru;
           key.dataset.enShift = e.shift.en;
+        }
+        if (e.noType) {
+          key.dataset.noType = true;
         }
         row.append(key);
       });

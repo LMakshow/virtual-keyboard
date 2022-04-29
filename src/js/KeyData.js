@@ -18,7 +18,9 @@ const keyData = [
     },
   ],
   [ // row 2
-    { key: 'Tab', code: 'Tab', class: 'key_tab' },
+    {
+      key: 'Tab', code: 'Tab', class: 'key_tab', noType: true,
+    },
     { key: { ru: 'Й', en: 'Q' }, code: 'KeyQ' },
     { key: { ru: 'Ц', en: 'W' }, code: 'KeyW' },
     { key: { ru: 'У', en: 'E' }, code: 'KeyE' },
@@ -50,7 +52,9 @@ const keyData = [
     { key: { ru: 'Д', en: 'L' }, code: 'KeyL' },
     { key: { ru: 'Ж', en: ';' }, shift: { ru: 'Ж', en: ':' }, code: 'Semicolon' },
     { key: { ru: 'Э', en: '\'' }, shift: { ru: 'Э', en: '"' }, code: 'Quote' },
-    { key: 'Enter', code: 'Enter', class: 'key_enter' },
+    {
+      key: 'Enter', code: 'Enter', class: 'key_enter', noType: true,
+    },
   ],
   [ // row 4
     {
@@ -78,7 +82,7 @@ const keyData = [
     {
       key: 'Alt', code: 'AltLeft', class: 'key_leftalt', noType: true,
     },
-    { key: '', code: 'Space', class: 'key_space' },
+    { key: ' ', code: 'Space', class: 'key_space' },
     {
       key: 'Alt', code: 'AltRight', class: 'key_rightalt', noType: true,
     },
@@ -89,7 +93,7 @@ const keyData = [
     { key: '▼', code: 'ArrowDown' },
     { key: '►', code: 'ArrowRight' },
     {
-      key: 'Del', code: 'Delete', class: 'key_delete', noType: true,
+      key: { ru: '🇷🇺', en: '🇺🇸' }, code: 'Lang', class: 'key_lang', noType: true,
     },
   ],
 ];
