@@ -106,7 +106,7 @@ body {
   border: 2px solid #718BB1;
   cursor: pointer;
 }
-.key:active {
+.key:active, .key.active {
   background: radial-gradient(137.5% 117.59% at 100% 117.59%, #253042 0%, #8697B7 75.27%, #35445F 100%);
   border: 2px solid #718BB1;
   box-sizing: border-box;
@@ -120,10 +120,22 @@ body {
   width: 107px;
 }
 .key.key_capslock {
+  display: flex;
   width: 107px;
+  gap: 10px;
   font-size: 20px;
   line-height: 20px;
+  justify-content: flex-start;
   text-align: center;
+}
+.key.key_capslock .caps_icon {
+  margin-left: 8px;
+  font-size: 40px;
+  color: #3D547A;
+}
+.key.key_capslock .caps_icon.caps_on {
+  color: #149100;
+  text-shadow: 0px 0px 7px #FFFFFF;
 }
 .key.key_tab, .key.key_leftalt, .key.key_rightalt, .key.key_leftctrl, .key.key_rightctrl {
   width: 81px;

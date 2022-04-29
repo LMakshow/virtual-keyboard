@@ -1,5 +1,5 @@
 import Keyboard from './Keyboard.js';
-import { createDomNode } from './Common.js';
+import { createDomNode, testCapsLock } from './Common.js';
 
 const title = 'Virtual Keyboard';
 const subTitle1 = 'Change Language: Shift + Alt';
@@ -25,6 +25,29 @@ window.onload = () => {
   const textField = createDomNode('textarea', '', 'textfield');
   textField.disabled = 'disabled';
   body.append(textField);
+
+  // Create keyboard
   const keyboard = new Keyboard();
   body.append(keyboard.generateKeyboard());
+
+  // Physical keyboard interaction
+  document.addEventListener('keydown', (event) => {
+    const button = document.querySelector(`[data-code=${event.code}]`);
+    if (button) {
+      button.classList.add('active');
+      if (event.code === 'CapsLock') testCapsLock(event);
+      if ((event.code === 'AltLeft' && event.shiftKey) || (event.code === 'AltRight' && event.shiftKey)) keyboard.languageChange(event);
+      if ((event.code === 'ShiftLeft' && event.altKey) || (event.code === 'ShiftRight' && event.altKey)) keyboard.languageChange(event);
+      if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') keyboard.updateKeyboard(event);
+    }
+  });
+
+  document.addEventListener('keyup', (event) => {
+    const button = document.querySelector(`[data-code=${event.code}]`);
+    if (button) {
+      button.classList.remove('active');
+      if (event.code === 'CapsLock') testCapsLock(event);
+      if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') keyboard.updateKeyboard(event);
+    }
+  });
 };

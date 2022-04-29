@@ -88,7 +88,7 @@ body {
     cursor: pointer;
   }
 
-  &:active {
+  &:active, &.active {
     background: radial-gradient(137.5% 117.59% at 100% 117.59%, #253042 0%, #8697B7 75.27%, #35445F 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
     border: 2px solid #718BB1;
     box-sizing: border-box;
@@ -105,10 +105,24 @@ body {
   }
 
   &.key_capslock {
+    display: flex;
     width: 107px;
+    gap: 10px;
     font-size: 20px;
     line-height: 20px;
+    justify-content: flex-start;
     text-align: center;
+
+    .caps_icon {
+      margin-left: 8px;
+      font-size: 40px;
+      color: #3D547A;
+
+      &.caps_on {
+        color: #149100;
+        text-shadow: 0px 0px 7px #FFFFFF;
+      }
+    }
   }
 
   &.key_tab, &.key_leftalt, &.key_rightalt, &.key_leftctrl, &.key_rightctrl {
