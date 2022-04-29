@@ -1,0 +1,135 @@
+@import "reset";
+
+body {
+  background: #212121;
+  font-family: 'Arial';
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  font-style: normal;
+}
+
+.header {
+  width: 1000px;
+  margin: 24px auto 0;
+}
+
+.header__text {
+  margin-top: 24px;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 46px;
+  align-items: center;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.subheading {
+  margin-top: 8px;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  color: #FFFFFF;
+}
+
+.textfield {
+  display: block;
+  width: 952px;
+  height: 240px;
+  margin: 12px auto 0;
+  padding: 24px;
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
+.keyboard {
+  width: 1000px;
+  height: 340px;
+  margin: 24px auto 40px;
+  background: linear-gradient(98.12deg, #545665 -0.27%, #C7D5F9 105.9%);
+  box-shadow: 4px 6px 4px rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard__container {
+  display: flex;
+  flex-direction: column;
+  width: 966px;
+  height: 310px;
+  gap: 10px;
+}
+
+.keyboard__row {
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  gap: 10px;
+}
+
+.key {
+  display: flex;
+  background: radial-gradient(89.86% 114.81% at 11.11% 0%, #7485A1 0%, #8191AC 18.75%, #C3CFE6 68.25%, #7F8FAB 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  border: 2px solid #A6B4C9;
+  width: 54px;
+  height: 54px;
+  box-sizing: border-box;
+  box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 27px;
+  justify-content: center;
+  align-items: center;
+  transition: all .1s;
+
+  &:hover {
+    border: 2px solid #718BB1;
+    cursor: pointer;
+  }
+
+  &:active {
+    background: radial-gradient(137.5% 117.59% at 100% 117.59%, #253042 0%, #8697B7 75.27%, #35445F 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+    border: 2px solid #718BB1;
+    box-sizing: border-box;
+    box-shadow: -1px -2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &.key_backspace {
+    width: 134px;
+    font-size: 20px;
+  }
+
+  &.key_backslash {
+    width: 107px;
+  }
+
+  &.key_capslock {
+    width: 107px;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  &.key_tab, &.key_leftalt, &.key_rightalt, &.key_leftctrl, &.key_rightctrl {
+    width: 81px;
+  }
+
+  &.key_leftshift {
+    width: 135px;
+  }
+
+  &.key_rightshift {
+    width: 117px;
+  }
+
+  &.key_enter {
+    width: 145px;
+  }
+
+  &.key_space {
+    width: 346px;
+  }
+}
+
+
