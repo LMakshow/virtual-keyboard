@@ -4,9 +4,11 @@ import { createDomNode } from './Common.js';
 export default class Keyboard {
   constructor() {
     this.lang = 'en';
+    this.caps = 'off';
+    this.shift = false;
   }
 
-  // Check language from local storage
+  // Check language and caps from local storage
   languageCheck() {
     if (localStorage.getItem('lang')) {
       this.lang = localStorage.getItem('lang');
@@ -26,19 +28,53 @@ export default class Keyboard {
     this.updateKeyboard(event);
   }
 
+  // Caps Lock interaction
+  capsLockIcon() {
+    if (this.caps === 'on') {
+      document.querySelector('.caps_icon').classList.add('caps_on');
+    } else {
+      document.querySelector('.caps_icon').classList.remove('caps_on');
+    }
+  }
+
+  changeCapsLock(event) {
+    if (this.caps === 'on') {
+      this.caps = 'off';
+    } else {
+      this.caps = 'on';
+    }
+    this.capsLockIcon();
+    this.updateKeyboard(event);
+  }
+
   // Update keyboard if switch language or pressing Shift
   updateKeyboard(event) {
     const { lang } = this;
-    if (event.shiftKey) {
+    if (event.shiftKey || this.shift) {
       document.querySelectorAll('.key').forEach((e) => {
         if (e.dataset[`${lang}Shift`]) {
-          e.innerHTML = e.dataset[`${lang}Shift`];
+          if (this.caps === 'on') {
+            e.innerHTML = e.dataset[`${lang}Shift`].toLowerCase();
+          } else e.innerHTML = e.dataset[`${lang}Shift`];
         } else if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
       });
     } else {
       document.querySelectorAll('.key').forEach((e) => {
-        if (e.dataset[lang]) e.innerHTML = e.dataset[lang];
+        if (e.dataset[lang]) {
+          if (this.caps === 'on' && !(event.shiftKey || this.shift)) {
+            e.innerHTML = e.dataset[lang].toUpperCase();
+          } else e.innerHTML = e.dataset[lang];
+        }
       });
+    }
+  }
+
+  removeShift(event) {
+    if (this.shift) {
+      this.shift = !this.shift;
+      document.querySelector('.key_leftshift').classList.remove('active');
+      document.querySelector('.key_rightshift').classList.remove('active');
+      this.updateKeyboard(event);
     }
   }
 
