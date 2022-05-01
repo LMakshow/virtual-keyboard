@@ -70,7 +70,7 @@ const keyData = [
     { key: { ru: 'б', en: ',' }, shift: { ru: 'Б', en: '<' }, code: 'Comma' },
     { key: { ru: 'ю', en: '.' }, shift: { ru: 'Ю', en: '>' }, code: 'Period' },
     { key: { ru: '.', en: '/' }, shift: { ru: ',', en: '?' }, code: 'Slash' },
-    { key: '▲', code: 'ArrowUp' },
+    { key: '▲', code: 'ArrowUp', noType: true },
     {
       key: 'Shift', code: 'ShiftRight', class: 'key_rightshift', noType: true,
     },
@@ -89,9 +89,9 @@ const keyData = [
     {
       key: 'Ctrl', code: 'ControlRight', class: 'key_rightctrl', noType: true,
     },
-    { key: '◄', code: 'ArrowLeft' },
-    { key: '▼', code: 'ArrowDown' },
-    { key: '►', code: 'ArrowRight' },
+    { key: '◄', code: 'ArrowLeft', noType: true },
+    { key: '▼', code: 'ArrowDown', noType: true },
+    { key: '►', code: 'ArrowRight', noType: true },
     {
       key: { ru: '🇷🇺', en: '🇺🇸' }, code: 'Lang', class: 'key_lang', noType: true,
     },

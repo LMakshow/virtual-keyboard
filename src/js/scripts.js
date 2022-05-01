@@ -7,14 +7,18 @@ const subTitle2 = 'Made for: Windows';
 const footerText = 'Maksym Lytvyn © 2022';
 
 const { body } = document;
-const textField = createDomNode('textarea', '123', 'textfield');
+const textField = createDomNode('textarea', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Tincidunt dui ut ornare lectus sit amet. Est lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. In iaculis nunc sed augue lacus viverra vitae congue eu. Nulla posuere sollicitudin aliquam ultrices. Condimentum id venenatis a condimentum. Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Sed risus pretium quam vulputate dignissim.', 'textfield');
 const keyboard = new Keyboard();
 const footer = createDomNode('footer', footerText, 'footer');
 
 const keyPress = (event, button, code) => {
+  let text = '';
+  let cursor = textField.selectionEnd;
   event.preventDefault();
+  textField.focus();
   if (code === 'CapsLock') keyboard.changeCapsLock(event);
-  if ((code === 'AltLeft' && (event.shiftKey || keyboard.shift))
+  if (
+    (code === 'AltLeft' && (event.shiftKey || keyboard.shift))
     || (code === 'AltRight' && (event.shiftKey || keyboard.shift))
     || (code === 'ShiftLeft' && event.altKey)
     || (code === 'ShiftRight' && event.altKey)
@@ -23,16 +27,69 @@ const keyPress = (event, button, code) => {
     keyboard.removeShift(event);
   }
   if (code === 'ShiftLeft' || code === 'ShiftRight') keyboard.updateKeyboard(event);
-  if (code === 'Tab') textField.value += '    ';
-  if (code === 'Enter') textField.value += '\n';
-  if (code === 'Backspace') textField.value = textField.value.slice(0, -1);
+  if (code === 'ArrowLeft' && cursor > 0) textField.setSelectionRange(cursor - 1, cursor - 1);
+  if (code === 'ArrowRight') textField.setSelectionRange(cursor + 1, cursor + 1);
+
+  if (code === 'ArrowUp') {
+    const textBeforeCursor = textField.value.substring(0, cursor).split('\n');
+    // if no Enters or line is longer than 57 symbols
+    if (textBeforeCursor.length === 1
+      || textBeforeCursor[textBeforeCursor.length - 1].length >= 57) {
+      cursor -= 57;
+      // if prev line is longer than cursor position in current line
+    } else if (textBeforeCursor[textBeforeCursor.length - 1].length
+      <= textBeforeCursor[textBeforeCursor.length - 2].length % 57) {
+      cursor -= (textBeforeCursor[textBeforeCursor.length - 2].length % 57) + 1;
+      // if prev line is shorter than cursor position in the current line
+    } else {
+      cursor -= textBeforeCursor[textBeforeCursor.length - 1].length + 1;
+    }
+    if (cursor < 0) cursor = 0;
+    textField.setSelectionRange(cursor, cursor);
+  }
+
+  if (code === 'ArrowDown') {
+    const textBeforeCursor = textField.value.substring(0, cursor).split('\n');
+    const textAfterCursor = textField.value.substring(textField.selectionEnd).split('\n');
+    // if no Enters or next line is longer than 57 symbols
+    if (textAfterCursor.length === 1 || textAfterCursor[0].length >= 57) {
+      cursor += 57;
+      // if next line shorter than cursor position
+    } else if ((textBeforeCursor[textBeforeCursor.length - 1].length % 57)
+    > textAfterCursor[1].length) {
+      cursor += textAfterCursor[0].length + textAfterCursor[1].length + 1;
+      // if current line is very long
+    } else if ((((textBeforeCursor[textBeforeCursor.length - 1].length % 57)
+      + textAfterCursor[0].length) > 57)) {
+      cursor += textAfterCursor[0].length;
+      // if next line longer than cursor position
+    } else {
+      cursor += (textBeforeCursor[textBeforeCursor.length - 1].length % 57)
+        + textAfterCursor[0].length + 1;
+    }
+    textField.setSelectionRange(cursor, cursor);
+  }
+  if (code === 'Tab') text = '    ';
+  if (code === 'Enter') text = '\n';
+  if (code === 'Backspace') text = '-1';
   if (!button.dataset.noType) {
-    textField.value += button.textContent;
-    // textField.value += ((keyboard.caps === 'off' && (event.shiftKey || keyboard.shift))
-    //   || (keyboard.caps === 'on' && !(event.shiftKey || keyboard.shift)))
-    //   ? button.textContent
-    //   : button.textContent.toLowerCase();
+    text = button.textContent;
     keyboard.removeShift(event);
+  }
+
+  if (text) {
+    let textBeforeCursor = textField.value.substring(0, cursor);
+    const textAfterCursor = textField.value.substring(textField.selectionEnd);
+    if (text === '-1') {
+      text = '';
+      if (cursor === textField.selectionEnd) {
+        textBeforeCursor = textBeforeCursor.slice(0, -1);
+        cursor -= (cursor > 0) ? 2 : 1;
+      } else cursor -= 1;
+    }
+    console.log(`${textBeforeCursor}, ${textAfterCursor}, ${cursor}`);
+    textField.value = textBeforeCursor + text + textAfterCursor;
+    textField.setSelectionRange(cursor + 1, cursor + 1);
   }
 };
 
@@ -52,7 +109,6 @@ const createHeader = () => {
 window.onload = () => {
   // Create DOM
   createHeader();
-  // textField.disabled = 'disabled';
   body.append(textField);
 
   // Create keyboard
@@ -83,7 +139,8 @@ window.onload = () => {
   document.querySelector('.keyboard').addEventListener('click', (event) => {
     if (event.target.closest('.key')) {
       const button = event.target.closest('.key');
-      if (button.dataset.code === 'ShiftLeft' || button.dataset.code === 'ShiftRight') {
+      if (button.dataset.code === 'ShiftLeft'
+      || button.dataset.code === 'ShiftRight') {
         keyboard.shift = !keyboard.shift;
         button.classList.toggle('active');
       }
