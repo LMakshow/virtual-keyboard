@@ -13,7 +13,7 @@ const footer = createDomNode('footer', footerText, 'footer');
 
 const keyPress = (event, button, code) => {
   let text = '';
-  let cursor = textField.selectionEnd;
+  let cursor = textField.selectionStart;
   event.preventDefault();
   textField.focus();
   if (code === 'CapsLock') keyboard.changeCapsLock(event);
@@ -28,7 +28,10 @@ const keyPress = (event, button, code) => {
   }
   if (code === 'ShiftLeft' || code === 'ShiftRight') keyboard.updateKeyboard(event);
   if (code === 'ArrowLeft' && cursor > 0) textField.setSelectionRange(cursor - 1, cursor - 1);
-  if (code === 'ArrowRight') textField.setSelectionRange(cursor + 1, cursor + 1);
+  if (code === 'ArrowRight') {
+    cursor = textField.selectionEnd;
+    textField.setSelectionRange(cursor + 1, cursor + 1);
+  }
 
   if (code === 'ArrowUp') {
     const textBeforeCursor = textField.value.substring(0, cursor).split('\n');
@@ -49,6 +52,7 @@ const keyPress = (event, button, code) => {
   }
 
   if (code === 'ArrowDown') {
+    cursor = textField.selectionEnd;
     const textBeforeCursor = textField.value.substring(0, cursor).split('\n');
     const textAfterCursor = textField.value.substring(textField.selectionEnd).split('\n');
     // if no Enters or next line is longer than 57 symbols
@@ -59,7 +63,7 @@ const keyPress = (event, button, code) => {
     > textAfterCursor[1].length) {
       cursor += textAfterCursor[0].length + textAfterCursor[1].length + 1;
       // if current line is very long
-    } else if ((((textBeforeCursor[textBeforeCursor.length - 1].length % 57)
+    } else if ((((textBeforeCursor[textBeforeCursor.length - 1].length)
       + textAfterCursor[0].length) > 57)) {
       cursor += textAfterCursor[0].length;
       // if next line longer than cursor position
@@ -89,6 +93,7 @@ const keyPress = (event, button, code) => {
     }
     textField.value = textBeforeCursor + text + textAfterCursor;
     textField.setSelectionRange(cursor + 1, cursor + 1);
+    if (text === '    ') textField.setSelectionRange(cursor + 4, cursor + 4);
   }
 };
 
