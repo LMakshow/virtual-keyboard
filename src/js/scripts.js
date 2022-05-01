@@ -7,7 +7,7 @@ const subTitle2 = 'Made for: Windows';
 const footerText = 'Maksym Lytvyn © 2022';
 
 const { body } = document;
-const textField = createDomNode('textarea', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dictum fusce ut placerat orci nulla pellentesque dignissim enim. Tincidunt dui ut ornare lectus sit amet. Est lorem ipsum dolor sit amet consectetur adipiscing elit pellentesque. In iaculis nunc sed augue lacus viverra vitae congue eu. Nulla posuere sollicitudin aliquam ultrices. Condimentum id venenatis a condimentum. Leo vel fringilla est ullamcorper eget nulla facilisi etiam dignissim. Ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Sed risus pretium quam vulputate dignissim.', 'textfield');
+const textField = createDomNode('textarea', '', 'textfield');
 const keyboard = new Keyboard();
 const footer = createDomNode('footer', footerText, 'footer');
 
@@ -87,7 +87,6 @@ const keyPress = (event, button, code) => {
         cursor -= (cursor > 0) ? 2 : 1;
       } else cursor -= 1;
     }
-    console.log(`${textBeforeCursor}, ${textAfterCursor}, ${cursor}`);
     textField.value = textBeforeCursor + text + textAfterCursor;
     textField.setSelectionRange(cursor + 1, cursor + 1);
   }
