@@ -76,6 +76,7 @@ const keyPress = (event, button, code) => {
   if (code === 'Tab') text = '    ';
   if (code === 'Enter') text = '\n';
   if (code === 'Backspace') text = '-1';
+  if (code === 'Delete') text = '+1';
   if (!button.dataset.noType) {
     text = button.textContent;
     keyboard.removeShift(event);
@@ -83,13 +84,20 @@ const keyPress = (event, button, code) => {
 
   if (text) {
     let textBeforeCursor = textField.value.substring(0, cursor);
-    const textAfterCursor = textField.value.substring(textField.selectionEnd);
+    let textAfterCursor = textField.value.substring(textField.selectionEnd);
     if (text === '-1') {
       text = '';
       if (cursor === textField.selectionEnd) {
         textBeforeCursor = textBeforeCursor.slice(0, -1);
         cursor -= (cursor > 0) ? 2 : 1;
       } else cursor -= 1;
+    }
+    if (text === '+1') {
+      text = '';
+      if (cursor === textField.selectionEnd) {
+        textAfterCursor = textAfterCursor.slice(1);
+      }
+      cursor -= 1;
     }
     textField.value = textBeforeCursor + text + textAfterCursor;
     textField.setSelectionRange(cursor + 1, cursor + 1);

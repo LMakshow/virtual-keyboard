@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Dist (will be uploaded to separate branch)
+dist/

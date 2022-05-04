@@ -36,6 +36,9 @@ const keyData = [
     {
       key: { ru: '\\', en: '\\' }, shift: { ru: '|', en: '|' }, code: 'Backslash', class: 'key_backslash',
     },
+    {
+      key: 'Del', code: 'Delete', class: 'key_del', noType: true,
+    },
   ],
   [ // row 3
     {

@@ -2,7 +2,7 @@
 
 body {
   background: #212121;
-  font-family: 'Arial';
+  font-family: 'Arial', sans-serif;
   font-weight: 400;
   font-size: 24px;
   line-height: 28px;
@@ -35,12 +35,13 @@ body {
 
 .textfield {
   display: block;
-  width: 952px;
+  width: 954px;
   height: 240px;
   margin: 12px auto 0;
-  padding: 24px;
+  padding: 24px 27px;
   background: #FFFFFF;
   border-radius: 20px;
+  font-family: 'Lucida Console', monospace;
   font-size: 30px;
   line-height: 130%;
   color: #000000;
@@ -66,7 +67,7 @@ body {
 }
 
 .keyboard {
-  width: 1000px;
+  width: 1010px;
   height: 340px;
   margin: 24px auto 40px;
   background: linear-gradient(98.12deg, #545665 -0.27%, #C7D5F9 105.9%);
@@ -80,7 +81,7 @@ body {
 .keyboard__container {
   display: flex;
   flex-direction: column;
-  width: 966px;
+  width: 977px;
   height: 310px;
   gap: 10px;
 }
@@ -119,12 +120,12 @@ body {
   }
 
   &.key_backspace {
-    width: 134px;
+    width: 145px;
     font-size: 20px;
   }
 
-  &.key_backslash {
-    width: 107px;
+  &.key_del {
+    font-size: 20px;
   }
 
   &.key_capslock {
@@ -157,15 +158,19 @@ body {
   }
 
   &.key_rightshift {
-    width: 117px;
+    width: 127px;
   }
 
   &.key_enter {
-    width: 145px;
+    width: 156px;
   }
 
   &.key_space {
     width: 346px;
+  }
+  
+  &.key_lang {
+    width: 65px;
   }
 }
 
